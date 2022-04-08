@@ -2,12 +2,11 @@ import * as Http from "http";
 import * as Url from "url";
 
 export namespace Oasis {
-    let port: number | string | undefined = process.env.port;
+    let port: number | string | undefined = process.env.PORT;
     if (port == undefined)
         port = 5001;
 
     let command: string = "";
-
 
     startServer(port);
 
