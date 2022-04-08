@@ -41,7 +41,7 @@ export namespace Oasis {
                 _response.write("Command is: " + await mongo.find({ "ghost": { $exists: true } }));
             } else {
                 let filter: Mongo.Filter<any> = { _id: "625025edc8b13bb0fd87915f" };
-                let update: Mongo.Document = { ghost: 'Hello ${newCommand}' };
+                let update: Mongo.Document = { ghost: newCommand };
                 await mongo.updateOne(filter, {$set: update});
                 _response.write("Command received: " + newCommand);
             }
