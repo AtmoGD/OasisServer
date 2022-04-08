@@ -3,19 +3,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Oasis = void 0;
 const Http = require("http");
 const Url = require("url");
+const Mongo = require("mongodb");
 var Oasis;
 (function (Oasis) {
     let port = process.env.PORT;
-    if (port == undefined)
-        port = 5001;
+    let databaseURL = "mongodb+srv://Admin:OasisServer@cluster0.ayk2n.mongodb.net/Oasis?retryWrites=true&w=majority";
     let command = "";
     startServer(port);
+    connectToDatabase(databaseURL);
     function startServer(_port) {
+        if (port == undefined)
+            port = 5001;
         let server = Http.createServer();
         server.listen(port);
-        console.log("listening on :" + port + " Yoo");
-        console.log("Server started");
+        console.log("listening on :" + port);
         server.addListener("request", handleRequest);
+    }
+    async function connectToDatabase(_url) {
+        let mongoClient = new Mongo.MongoClient(_url);
+        await mongoClient.connect();
+        console.log("Database connection is established");
+        let orders = mongoClient.db("Oasis").collection("Commands");
+        orders.insertOne({ "ghost": "UP" });
     }
     function handleRequest(_request, _response) {
         _response.setHeader("content-type", "text/html; charset=utf-8");

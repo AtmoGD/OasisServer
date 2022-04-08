@@ -4,7 +4,7 @@ import * as Mongo from "mongodb";
 
 export namespace Oasis {
     let port: number | string | undefined = process.env.PORT;
-    let databaseURL: string = "mongodb://localhost:27017";
+    let databaseURL: string = "mongodb+srv://Admin:OasisServer@cluster0.ayk2n.mongodb.net/Oasis?retryWrites=true&w=majority";
 
     let command: string = "";
 
