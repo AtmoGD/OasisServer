@@ -25,7 +25,7 @@ var Oasis;
             console.log(_request.url);
             let url = Url.parse(_request.url, true);
             let newCommand = url.query["command"]?.toString();
-            if (newCommand == "get") {
+            if (newCommand == "getCommand") {
                 _response.write(command);
             }
             else {

@@ -31,7 +31,7 @@ export namespace Oasis {
 
             let newCommand = url.query["command"]?.toString()!;
 
-            if (newCommand == "get") {
+            if (newCommand == "getCommand") {
                 _response.write(command);
             } else {
                 command = newCommand;
