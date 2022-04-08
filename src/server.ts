@@ -30,11 +30,13 @@ export namespace Oasis {
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
 
             let newCommand = url.query["command"]?.toString()!;
+            if (newCommand == undefined)
+                newCommand = "";
 
             if (newCommand == "getCommand") {
                 _response.write("Command is: " + command);
             } else {
-                command = newCommand == undefined ? "" : newCommand;
+                command = newCommand;
                 _response.write("Command received: " + command);
             }
         }
