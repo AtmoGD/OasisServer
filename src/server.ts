@@ -37,7 +37,7 @@ export namespace Oasis {
             console.log(_request.url);
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
 
-            let newCommand = url.query["ghost"]?.toString()!;
+            let newCommand: string = url.query["ghost"]?.toString()!;
             if (newCommand == undefined)
                 newCommand = "";
 
@@ -45,9 +45,9 @@ export namespace Oasis {
 
 
             if (newCommand == "getCommand") {
-                _response.write("Command is: " + await mongo.find( { "ghost" : { $exists : true } }));
+                _response.write("Command is: " + await mongo.find({ "ghost": { $exists: true } }));
             } else {
-                await mongo.updateOne({"_id": "625025edc8b13bb0fd87915f"}, {$set: {"ghost": "HalloWorld" + newCommand}}, {upsert: true});
+                await mongo.updateOne({ "_id": "625025edc8b13bb0fd87915f" }, { $set: { "ghost": "HalloWorld" + newCommand.toString() } }, { upsert: true });
 
                 _response.write("Command received: " + newCommand);
             }
