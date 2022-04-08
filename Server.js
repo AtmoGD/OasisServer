@@ -7,7 +7,7 @@ var Oasis;
 (function (Oasis) {
     let port = process.env.port;
     //   let command: string | string[] | undefined = process.env.command;
-    let command;
+    // let command: string;
     if (port == undefined)
         port = 5001;
     startServer(port);
@@ -24,11 +24,11 @@ var Oasis;
         if (_request.url) {
             console.log(_request.url);
             let url = Url.parse(_request.url, true);
-            command = url.query["command"]?.toString();
-            if (command == undefined)
-                command = "";
+            // command = url.query["command"]?.toString()!;
+            // if (command == undefined)
+            //     command = "";
             let jsonString = JSON.stringify(url.query);
-            _response.write(jsonString + command);
+            _response.write(jsonString);
         }
         _response.end();
     }

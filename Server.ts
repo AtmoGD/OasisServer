@@ -4,7 +4,7 @@ import * as Url from "url";
 export namespace Oasis {
     let port: number | string | undefined = process.env.port;
     //   let command: string | string[] | undefined = process.env.command;
-    let command: string;
+    // let command: string;
 
     if (port == undefined)
         port = 5001;
@@ -24,16 +24,16 @@ export namespace Oasis {
 
         console.log("Here");
         if (_request.url) {
-            
+
             console.log(_request.url);
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
 
-            command = url.query["command"]?.toString()!;
-            if (command == undefined)
-                command = "";
+            // command = url.query["command"]?.toString()!;
+            // if (command == undefined)
+            //     command = "";
 
             let jsonString: string = JSON.stringify(url.query);
-            _response.write(jsonString + command);
+            _response.write(jsonString);
         }
 
         _response.end();
