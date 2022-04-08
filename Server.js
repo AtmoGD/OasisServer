@@ -6,14 +6,15 @@ const Url = require("url");
 var Oasis;
 (function (Oasis) {
     let port = process.env.port;
-    let command = process.env.command;
+    //   let command: string | string[] | undefined = process.env.command;
+    let command;
     if (port == undefined)
         port = 5001;
     startServer(port);
     function startServer(_port) {
         let server = Http.createServer();
         server.listen(port);
-        console.log("listening on :");
+        console.log("listening on :" + port);
         server.addListener("request", handleRequest);
     }
     function handleRequest(_request, _response) {
@@ -23,10 +24,9 @@ var Oasis;
         if (_request.url) {
             console.log(_request.url);
             let url = Url.parse(_request.url, true);
-            for (let key in url.query) {
-                _response.write(key + ":" + url.query[key] + "<br/>");
-            }
-            command = url.query["command"];
+            command = url.query["command"]?.toString();
+            if (command == undefined)
+                command = "";
             let jsonString = JSON.stringify(url.query);
             _response.write(jsonString + command);
         }
