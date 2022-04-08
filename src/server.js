@@ -33,11 +33,11 @@ var Oasis;
                 _response.write("Command is: " + await mongo.find({ "ghost": { $exists: true } }));
             }
             else {
-                let filter = { "_id": "625025edc8b13bb0fd87915f" };
-                let update = { $addToSet: { "ghost": newCommand } };
+                let filter = { '_id': '625025edc8b13bb0fd87915f' };
+                let update = { $addToSet: { 'ghost': newCommand } };
                 await mongo.updateOne(filter, update);
+                _response.write("Command received: " + newCommand);
             }
-            _response.write("Command received: " + newCommand);
         }
         _response.end();
     }
