@@ -34,7 +34,7 @@ var Oasis;
             }
             else {
                 let filter = { "_id": "625025edc8b13bb0fd87915f" };
-                let update = { $set: { ghost: newCommand } };
+                let update = { $addToSet: { ghost: newCommand } };
                 await mongo.updateOne(filter, update);
             }
             _response.write("Command received: " + newCommand);
