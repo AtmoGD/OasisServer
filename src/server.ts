@@ -3,11 +3,11 @@ import * as Url from "url";
 
 export namespace Oasis {
     let port: number | string | undefined = process.env.PORT;
-    //   let command: string | string[] | undefined = process.env.command;
-    let command: string;
-
     if (port == undefined)
         port = 5001;
+
+    let command: string = "";
+
 
     startServer(port);
 
@@ -29,8 +29,6 @@ export namespace Oasis {
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
 
             command = url.query["command"]?.toString()!;
-            if (command == undefined)
-                command = "";
 
             let jsonString: string = JSON.stringify(url.query);
             _response.write(jsonString + "\n" + command);

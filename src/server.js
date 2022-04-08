@@ -6,10 +6,9 @@ const Url = require("url");
 var Oasis;
 (function (Oasis) {
     let port = process.env.PORT;
-    //   let command: string | string[] | undefined = process.env.command;
-    let command;
     if (port == undefined)
         port = 5001;
+    let command = "";
     startServer(port);
     function startServer(_port) {
         let server = Http.createServer();
@@ -25,8 +24,6 @@ var Oasis;
             console.log(_request.url);
             let url = Url.parse(_request.url, true);
             command = url.query["command"]?.toString();
-            if (command == undefined)
-                command = "";
             let jsonString = JSON.stringify(url.query);
             _response.write(jsonString + "\n" + command);
         }
