@@ -24,9 +24,14 @@ var Oasis;
         if (_request.url) {
             console.log(_request.url);
             let url = Url.parse(_request.url, true);
-            command = url.query["command"]?.toString();
-            let jsonString = JSON.stringify(url.query);
-            _response.write(jsonString + "\n" + command);
+            let newCommand = url.query["command"]?.toString();
+            if (newCommand == "get") {
+                _response.write(command);
+            }
+            else {
+                command = newCommand;
+                _response.write("Command received: " + command);
+            }
         }
         _response.end();
     }

@@ -29,10 +29,14 @@ export namespace Oasis {
             console.log(_request.url);
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
 
-            command = url.query["command"]?.toString()!;
+            let newCommand = url.query["command"]?.toString()!;
 
-            let jsonString: string = JSON.stringify(url.query);
-            _response.write(jsonString + "\n" + command);
+            if (newCommand == "get") {
+                _response.write(command);
+            } else {
+                command = newCommand;
+                _response.write("Command received: " + command);
+            }
         }
 
         _response.end();
