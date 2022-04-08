@@ -31,7 +31,7 @@ export namespace Oasis {
       command = url.query["command"];
 
       let jsonString: string = JSON.stringify(url.query);
-      _response.write(jsonString);
+      _response.write(jsonString + command);
     }
 
     _response.end();
