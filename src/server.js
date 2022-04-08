@@ -34,7 +34,7 @@ var Oasis;
             }
             else {
                 let filter = { _id: "625025edc8b13bb0fd87915f" };
-                let update = { ghost: newCommand.toString() + "Hello" };
+                let update = { ghost: 'Hello ${newCommand}' };
                 await mongo.updateOne(filter, { $set: update });
                 _response.write("Command received: " + newCommand);
             }
