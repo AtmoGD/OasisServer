@@ -33,4 +33,4 @@ var Oasis;
         _response.end();
     }
 })(Oasis = exports.Oasis || (exports.Oasis = {}));
-//# sourceMappingURL=Server.js.map
+//# sourceMappingURL=server.js.map

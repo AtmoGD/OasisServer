@@ -24,6 +24,7 @@ export namespace Oasis {
 
         console.log("Here");
         if (_request.url) {
+            
             console.log(_request.url);
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
 
