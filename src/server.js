@@ -13,7 +13,8 @@ var Oasis;
     function startServer(_port) {
         let server = Http.createServer();
         server.listen(port);
-        console.log("listening on :" + port);
+        console.log("listening on :" + port + " Yoo");
+        console.log("Server started");
         server.addListener("request", handleRequest);
     }
     function handleRequest(_request, _response) {

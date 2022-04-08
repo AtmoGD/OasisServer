@@ -14,7 +14,9 @@ export namespace Oasis {
     function startServer(_port: number | string): void {
         let server: Http.Server = Http.createServer();
         server.listen(port);
-        console.log("listening on :" + port);
+        console.log("listening on :" + port + " Yoo");
+        console.log("Server started");
+        
         server.addListener("request", handleRequest);
     }
 
