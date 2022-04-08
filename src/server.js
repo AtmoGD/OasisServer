@@ -5,7 +5,7 @@ const Http = require("http");
 const Url = require("url");
 var Oasis;
 (function (Oasis) {
-    let port = process.env.PORT;
+    let port = process.env.port;
     if (port == undefined)
         port = 5001;
     let command = "";

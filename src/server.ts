@@ -2,7 +2,7 @@ import * as Http from "http";
 import * as Url from "url";
 
 export namespace Oasis {
-    let port: number | string | undefined = process.env.PORT;
+    let port: number | string | undefined = process.env.port;
     if (port == undefined)
         port = 5001;
 
@@ -16,7 +16,7 @@ export namespace Oasis {
         server.listen(port);
         console.log("listening on :" + port + " Yoo");
         console.log("Server started");
-        
+
         server.addListener("request", handleRequest);
     }
 
