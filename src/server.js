@@ -8,7 +8,7 @@ var Oasis;
 (function (Oasis) {
     let port = process.env.PORT;
     let databaseURL = "mongodb+srv://Admin:OasisServer@cluster0.ayk2n.mongodb.net/Oasis?retryWrites=true&w=majority";
-    let command = "";
+    let mongoClient = new Mongo.MongoClient(databaseURL);
     startServer(port);
     connectToDatabase(databaseURL);
     function startServer(_port) {
@@ -20,28 +20,26 @@ var Oasis;
         server.addListener("request", handleRequest);
     }
     async function connectToDatabase(_url) {
-        let mongoClient = new Mongo.MongoClient(_url);
         await mongoClient.connect();
         console.log("Database connection is established");
-        let orders = mongoClient.db("Oasis").collection("Commands");
-        orders.insertOne({ "ghost": "UP" });
     }
-    function handleRequest(_request, _response) {
+    async function handleRequest(_request, _response) {
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
         console.log("Here");
         if (_request.url) {
             console.log(_request.url);
             let url = Url.parse(_request.url, true);
-            let newCommand = url.query["command"]?.toString();
+            let newCommand = url.query["ghost"]?.toString();
             if (newCommand == undefined)
                 newCommand = "";
+            let mongo = mongoClient.db("Oasis").collection("Commands");
             if (newCommand == "getCommand") {
-                _response.write("Command is: " + command);
+                _response.write("Command is: " + await mongo.find());
             }
             else {
-                command = newCommand;
-                _response.write("Command received: " + command);
+                await mongo.insertOne({ "ghost": newCommand });
+                _response.write("Command received: " + newCommand);
             }
         }
         _response.end();

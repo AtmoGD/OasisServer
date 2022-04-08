@@ -5,8 +5,7 @@ import * as Mongo from "mongodb";
 export namespace Oasis {
     let port: number | string | undefined = process.env.PORT;
     let databaseURL: string = "mongodb+srv://Admin:OasisServer@cluster0.ayk2n.mongodb.net/Oasis?retryWrites=true&w=majority";
-
-    let command: string = "";
+    let mongoClient: Mongo.MongoClient = new Mongo.MongoClient(databaseURL);
 
     startServer(port);
     connectToDatabase(databaseURL);
@@ -23,15 +22,12 @@ export namespace Oasis {
     }
 
     async function connectToDatabase(_url: string): Promise<void> {
-        let mongoClient: Mongo.MongoClient = new Mongo.MongoClient(_url);
+
         await mongoClient.connect();
         console.log("Database connection is established");
-
-        let orders: Mongo.Collection = mongoClient.db("Oasis").collection("Commands");
-        orders.insertOne({"ghost": "UP"});
     }
 
-    function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
+    async function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): Promise<void> {
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -41,15 +37,18 @@ export namespace Oasis {
             console.log(_request.url);
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
 
-            let newCommand = url.query["command"]?.toString()!;
+            let newCommand = url.query["ghost"]?.toString()!;
             if (newCommand == undefined)
                 newCommand = "";
 
+            let mongo: Mongo.Collection = mongoClient.db("Oasis").collection("Commands");
+
+
             if (newCommand == "getCommand") {
-                _response.write("Command is: " + command);
+                _response.write("Command is: " + await mongo.find());
             } else {
-                command = newCommand;
-                _response.write("Command received: " + command);
+                await mongo.insertOne({"ghost": newCommand});
+                _response.write("Command received: " + newCommand);
             }
         }
 
