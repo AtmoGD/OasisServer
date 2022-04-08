@@ -34,7 +34,7 @@ export namespace Oasis {
             if (newCommand == "getCommand") {
                 _response.write("Command is: " + command);
             } else {
-                command = newCommand;
+                command = newCommand == undefined ? "" : newCommand;
                 _response.write("Command received: " + command);
             }
         }
