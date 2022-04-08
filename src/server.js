@@ -38,7 +38,7 @@ var Oasis;
                 _response.write("Command is: " + await mongo.find({ "ghost": { $exists: true } }));
             }
             else {
-                await mongo.updateOne({ "ghost": { $exists: true } }, { $set: newCommand });
+                await mongo.updateOne({ "ghost": { $exists: true } }, { $set: { newCommand } });
                 _response.write("Command received: " + newCommand);
             }
         }
