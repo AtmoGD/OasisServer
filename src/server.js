@@ -26,7 +26,7 @@ var Oasis;
             let url = Url.parse(_request.url, true);
             let newCommand = url.query["command"]?.toString();
             if (newCommand == "getCommand") {
-                _response.write(command);
+                _response.write("Command is: " + command);
             }
             else {
                 command = newCommand;
