@@ -35,10 +35,10 @@ var Oasis;
                 newCommand = "";
             let mongo = mongoClient.db("Oasis").collection("Commands");
             if (newCommand == "getCommand") {
-                _response.write("Command is: " + await mongo.find());
+                _response.write("Command is: " + await mongo.find({ "ghost": { $exists: true } }));
             }
             else {
-                await mongo.insertOne({ "ghost": newCommand });
+                await mongo.updateOne({ title: "ghost" }, { $set: { title: newCommand } });
                 _response.write("Command received: " + newCommand);
             }
         }
