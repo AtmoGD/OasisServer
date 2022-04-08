@@ -47,7 +47,7 @@ export namespace Oasis {
             if (newCommand == "getCommand") {
                 _response.write("Command is: " + await mongo.find( { "ghost" : { $exists : true } }));
             } else {
-                await mongo.updateOne({"_id": "625025edc8b13bb0fd87915f"}, {$set: {"ghost": ""+newCommand}}, {upsert: true});
+                await mongo.updateOne({"_id": "625025edc8b13bb0fd87915f"}, {$set: {"ghost": "HalloWorld"}}, {upsert: true});
 
                 _response.write("Command received: " + newCommand);
             }
