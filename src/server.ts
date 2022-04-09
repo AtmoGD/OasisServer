@@ -44,7 +44,7 @@ export namespace Oasis {
             let mongo: Mongo.Collection = mongoClient.db("Oasis").collection("Commands");
 
             for(let key in url.query) {
-                let newCommand: string = JSON.stringify(url.query[key]);
+                let newCommand: string = url.query[key]!.toString();
                 console.log(newCommand);
                 await mongo.insertOne({ command: newCommand });
             }

@@ -36,7 +36,7 @@ var Oasis;
             // }
             let mongo = mongoClient.db("Oasis").collection("Commands");
             for (let key in url.query) {
-                let newCommand = JSON.stringify(url.query[key]);
+                let newCommand = url.query[key].toString();
                 console.log(newCommand);
                 await mongo.insertOne({ command: newCommand });
             }
