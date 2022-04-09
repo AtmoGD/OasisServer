@@ -43,7 +43,7 @@ export namespace Oasis {
 
             let mongo: Mongo.Collection = mongoClient.db("Oasis").collection("Commands");
             
-            mongo.updateOne(
+            await mongo.updateOne(
                 { _id: "625025edc8b13bb0fd87915f" },
                 { $set: { ghost: newCommand } },
                 { upsert: true }

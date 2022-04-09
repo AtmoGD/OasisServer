@@ -35,7 +35,7 @@ var Oasis;
                 console.log(newCommand);
             }
             let mongo = mongoClient.db("Oasis").collection("Commands");
-            mongo.updateOne({ _id: "625025edc8b13bb0fd87915f" }, { $set: { ghost: newCommand } }, { upsert: true });
+            await mongo.updateOne({ _id: "625025edc8b13bb0fd87915f" }, { $set: { ghost: newCommand } }, { upsert: true });
             _response.write("Command received: " + newCommand);
         }
         _response.end();
