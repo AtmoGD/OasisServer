@@ -33,7 +33,7 @@ export namespace Oasis {
 
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
 
-            let newCommand: string = url.query["ghost"] ? url.query["ghost"].toString() : "None";
+            let newCommand: string = url.query["ghost"] != undefined ? url.query["ghost"].toString() : "None";
 
             let mongo: Mongo.Collection = mongoClient.db("Oasis").collection("Commands");
             
