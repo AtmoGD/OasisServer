@@ -43,7 +43,7 @@ export namespace Oasis {
                 if (command == "get") {
                     let result: Mongo.WithId<Mongo.Document> | null = await mongo.findOne({ _id: id });
                     if (result != null) {
-                        _response.write(JSON.stringify(result));
+                        _response.write(result[object].toString());
                     }
                     // let objectValue = result[object]?.toString();
                     // _response.write(objectValue);
