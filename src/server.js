@@ -28,7 +28,7 @@ var Oasis;
             console.log(_request.url);
             let url = Url.parse(_request.url, true);
             // let newCommand: string = url.query["ghost"] != undefined ? url.query["ghost"].toString() : "None";
-            let newCommand = "Empty";
+            let newCommand = "None";
             if (url.query["ghost"] != undefined) {
                 console.log("is NOT undefined!!!!");
                 newCommand = url.query["ghost"].toString();
