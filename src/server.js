@@ -35,9 +35,11 @@ var Oasis;
             //     console.log(newCommand);
             // }
             let mongo = mongoClient.db("Oasis").collection("Commands");
-            let newCommand = url.query["ghost"]?.toString();
-            if (newCommand != undefined) {
-                await mongo.updateOne({ _id: "625025edc8b13bb0fd87915f" }, { $set: { ghost: newCommand } }, { upsert: true });
+            let id = url.query["id"]?.toString();
+            let object = url.query["object"]?.toString();
+            let command = url.query["command"]?.toString();
+            if (command != undefined && object != undefined && id != undefined) {
+                await mongo.updateOne({ _id: id }, { $set: { object: command } }, { upsert: true });
                 _response.write("Command received: ");
             }
             // for (let key in url.query) {

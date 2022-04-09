@@ -43,12 +43,14 @@ export namespace Oasis {
 
             let mongo: Mongo.Collection = mongoClient.db("Oasis").collection("Commands");
 
-            let newCommand: string | undefined = url.query["ghost"]?.toString();
+            let id: string | undefined = url.query["id"]?.toString();
+            let object: string | undefined = url.query["object"]?.toString();
+            let command: string | undefined = url.query["command"]?.toString();
 
-            if (newCommand != undefined) {
+            if (command != undefined && object != undefined && id != undefined) {
                 await mongo.updateOne(
-                    { _id: "625025edc8b13bb0fd87915f" },
-                    { $set: { ghost: newCommand } },
+                    { _id: id },
+                    { $set: { object: command } },
                     { upsert: true }
                 );
 
