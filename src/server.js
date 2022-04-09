@@ -38,13 +38,9 @@ var Oasis;
             for (let key in url.query) {
                 let newCommand = url.query[key].toString();
                 console.log(newCommand);
-                await mongo.insertOne({ command: newCommand });
+                // await mongo.insertOne({ command: newCommand });
+                await mongo.updateOne({ _id: "625025edc8b13bb0fd87915f" }, { $set: { ghost: newCommand } }, { upsert: true });
             }
-            // await mongo.updateOne(
-            //     { _id: "625025edc8b13bb0fd87915f" },
-            //     { $set: { ghost: newCommand } },
-            //     { upsert: true }
-            // )
             _response.write("Command received: ");
         }
         _response.end();
