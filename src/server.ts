@@ -33,14 +33,6 @@ export namespace Oasis {
 
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
 
-            // let newCommand: string = url.query["ghost"] != undefined ? url.query["ghost"].toString() : "None";
-            // let newCommand = "None";
-            // if(url.query["ghost"] != undefined) {
-            //     console.log("is NOT undefined!!!!");
-            //     newCommand = JSON.stringify(url.query);
-            //     console.log(newCommand);
-            // }
-
             let mongo: Mongo.Collection = mongoClient.db("Oasis").collection("Commands");
 
             let id: string | undefined = url.query["id"]?.toString();
@@ -50,38 +42,13 @@ export namespace Oasis {
             if (command != undefined && object != undefined && id != undefined) {
                 await mongo.updateOne(
                     { _id: id },
-                    { $set: { object: command } },
+                    { $set: { [object]: command } },
                     { upsert: true }
                 );
 
                 _response.write("Command received: ");
             }
-
-            // for (let key in url.query) {
-            //     let newCommand: string | undefined = url.query[key]?.toString();
-
-            //     if (newCommand != undefined) {
-            //         await mongo.updateOne(
-            //             { _id: "625025edc8b13bb0fd87915f" },
-            //             { $set: { ghost: newCommand } },
-            //             { upsert: true }
-            //         );
-
-            //         _response.write("Command received: ");
-            //     }
-            // }
         }
         _response.end();
     }
 }
-
-
-
-
-// if (newCommand == "getCommand") {
-//     _response.write("Command is: " + await mongo.find({ "ghost": { $exists: true } }));
-// } else {
-    // let filter: Mongo.Filter<any> = { _id: "625025edc8b13bb0fd87915f" };
-    // let update: Mongo.Document = { ghost: newCommand };
-    // await mongo.updateOne(filter, {$set: update});
-// }
