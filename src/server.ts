@@ -43,19 +43,31 @@ export namespace Oasis {
 
             let mongo: Mongo.Collection = mongoClient.db("Oasis").collection("Commands");
 
-            for (let key in url.query) {
-                let newCommand: string | undefined = url.query[key]?.toString();
+            let newCommand: string | undefined = url.query["ghost"]?.toString();
 
-                if (newCommand != undefined) {
-                    await mongo.updateOne(
-                        { _id: "625025edc8b13bb0fd87915f" },
-                        { $set: { ghost: newCommand } },
-                        { upsert: true }
-                    );
+            if (newCommand != undefined) {
+                await mongo.updateOne(
+                    { _id: "625025edc8b13bb0fd87915f" },
+                    { $set: { ghost: newCommand } },
+                    { upsert: true }
+                );
 
-                    _response.write("Command received: ");
-                }
+                _response.write("Command received: ");
             }
+
+            // for (let key in url.query) {
+            //     let newCommand: string | undefined = url.query[key]?.toString();
+
+            //     if (newCommand != undefined) {
+            //         await mongo.updateOne(
+            //             { _id: "625025edc8b13bb0fd87915f" },
+            //             { $set: { ghost: newCommand } },
+            //             { upsert: true }
+            //         );
+
+            //         _response.write("Command received: ");
+            //     }
+            // }
         }
         _response.end();
     }
