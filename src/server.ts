@@ -41,9 +41,12 @@ export namespace Oasis {
 
             if (command != undefined && object != undefined && id != undefined) {
                 if (command == "get") {
-                    let result: Mongo.Document = await mongo.find({ _id: id });
-                    let objectValue = result[object].toString();
-                    _response.write(objectValue);
+                    let result: Mongo.WithId<Mongo.Document> | null = await mongo.findOne({ _id: id });
+                    if (result != null) {
+                        _response.write(JSON.stringify(result));
+                    }
+                    // let objectValue = result[object]?.toString();
+                    // _response.write(objectValue);
                 } else {
 
                     await mongo.updateOne(
