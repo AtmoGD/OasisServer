@@ -27,7 +27,12 @@ var Oasis;
         if (_request.url) {
             console.log(_request.url);
             let url = Url.parse(_request.url, true);
-            let newCommand = url.query["ghost"] != undefined ? url.query["ghost"].toString() : "None";
+            // let newCommand: string = url.query["ghost"] != undefined ? url.query["ghost"].toString() : "None";
+            let newCommand = "Empty";
+            if (url.query["ghost"] != undefined) {
+                console.log("is undefined!!!!");
+                newCommand = url.query["ghost"].toString();
+            }
             let mongo = mongoClient.db("Oasis").collection("Commands");
             mongo.updateOne({ _id: "625025edc8b13bb0fd87915f" }, { $set: { ghost: newCommand } }, { upsert: true });
             _response.write("Command received: " + newCommand);
