@@ -37,7 +37,7 @@ export namespace Oasis {
             let newCommand = "None";
             if(url.query["ghost"] != undefined) {
                 console.log("is NOT undefined!!!!");
-                newCommand = url.query["ghost"].toString();
+                newCommand = await url.query["ghost"].toString();
                 console.log(newCommand);
             }
 
