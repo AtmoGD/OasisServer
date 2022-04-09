@@ -36,8 +36,9 @@ export namespace Oasis {
             // let newCommand: string = url.query["ghost"] != undefined ? url.query["ghost"].toString() : "None";
             let newCommand = "Empty";
             if(url.query["ghost"] != undefined) {
-                console.log("is undefined!!!!");
+                console.log("is NOT undefined!!!!");
                 newCommand = url.query["ghost"].toString();
+                console.log(newCommand);
             }
 
             let mongo: Mongo.Collection = mongoClient.db("Oasis").collection("Commands");
