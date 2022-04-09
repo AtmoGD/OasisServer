@@ -31,7 +31,7 @@ var Oasis;
             let newCommand = "Empty";
             if (url.query["ghost"] != undefined) {
                 console.log("is NOT undefined!!!!");
-                newCommand = url.query["ghost"].toString();
+                newCommand = url.query["ghost"][0];
                 console.log(newCommand);
             }
             let mongo = mongoClient.db("Oasis").collection("Commands");
