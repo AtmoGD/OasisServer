@@ -32,8 +32,15 @@ var Oasis;
             let object = url.query["object"]?.toString();
             let command = url.query["command"]?.toString();
             if (command != undefined && object != undefined && id != undefined) {
-                await mongo.updateOne({ _id: id }, { $set: { [object]: command } }, { upsert: true });
-                _response.write("Command received: ");
+                if (command == "get") {
+                    let result = await mongo.find({ _id: id });
+                    let objectValue = result[object].toString();
+                    _response.write(objectValue);
+                }
+                else {
+                    await mongo.updateOne({ _id: id }, { $set: { [object]: command } }, { upsert: true });
+                    _response.write("ID: " + id + "\nChanged value of Object: " + object + "\nto: " + command);
+                }
             }
         }
         _response.end();

@@ -40,13 +40,20 @@ export namespace Oasis {
             let command: string | undefined = url.query["command"]?.toString();
 
             if (command != undefined && object != undefined && id != undefined) {
-                await mongo.updateOne(
-                    { _id: id },
-                    { $set: { [object]: command } },
-                    { upsert: true }
-                );
+                if (command == "get") {
+                    let result: Mongo.Document = await mongo.find({ _id: id });
+                    let objectValue = result[object].toString();
+                    _response.write(objectValue);
+                } else {
 
-                _response.write("Command received: ");
+                    await mongo.updateOne(
+                        { _id: id },
+                        { $set: { [object]: command } },
+                        { upsert: true }
+                    );
+
+                    _response.write("ID: " + id + "\nChanged value of Object: " + object + "\nto: " + command);
+                }
             }
         }
         _response.end();
