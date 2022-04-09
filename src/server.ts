@@ -33,25 +33,28 @@ export namespace Oasis {
 
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
 
-            let newCommand: string = url.query["ghost"] ? url.query["ghost"].toString() : "";
+            let newCommand: string = url.query["ghost"] ? url.query["ghost"].toString() : "None";
 
             let mongo: Mongo.Collection = mongoClient.db("Oasis").collection("Commands");
-
-            if (newCommand == "getCommand") {
-                _response.write("Command is: " + await mongo.find({ "ghost": { $exists: true } }));
-            } else {
-                // let filter: Mongo.Filter<any> = { _id: "625025edc8b13bb0fd87915f" };
-                // let update: Mongo.Document = { ghost: newCommand };
-                // await mongo.updateOne(filter, {$set: update});
-                mongo.updateOne(
-                    { _id: "625025edc8b13bb0fd87915f" },
-                    { $set: { ghost: newCommand } },
-                    { upsert: true }
-                )
-                _response.write("Command received: " + newCommand);
-            }
-
+            
+            mongo.updateOne(
+                { _id: "625025edc8b13bb0fd87915f" },
+                { $set: { ghost: newCommand } },
+                { upsert: true }
+            )
+            _response.write("Command received: " + newCommand); 
         }
         _response.end();
     }
 }
+
+
+
+
+// if (newCommand == "getCommand") {
+//     _response.write("Command is: " + await mongo.find({ "ghost": { $exists: true } }));
+// } else {
+    // let filter: Mongo.Filter<any> = { _id: "625025edc8b13bb0fd87915f" };
+    // let update: Mongo.Document = { ghost: newCommand };
+    // await mongo.updateOne(filter, {$set: update});
+// }
