@@ -28,15 +28,24 @@ var Oasis;
             console.log(_request.url);
             let url = Url.parse(_request.url, true);
             // let newCommand: string = url.query["ghost"] != undefined ? url.query["ghost"].toString() : "None";
-            let newCommand = "None";
-            if (url.query["ghost"] != undefined) {
-                console.log("is NOT undefined!!!!");
-                newCommand = JSON.stringify(url.query);
-                console.log(newCommand);
-            }
+            // let newCommand = "None";
+            // if(url.query["ghost"] != undefined) {
+            //     console.log("is NOT undefined!!!!");
+            //     newCommand = JSON.stringify(url.query);
+            //     console.log(newCommand);
+            // }
             let mongo = mongoClient.db("Oasis").collection("Commands");
-            await mongo.updateOne({ _id: "625025edc8b13bb0fd87915f" }, { $set: { ghost: newCommand } }, { upsert: true });
-            _response.write("Command received: " + newCommand);
+            for (let key in url.query) {
+                let newCommand = JSON.stringify(url.query[key]);
+                console.log(newCommand);
+                await mongo.insertOne({ command: newCommand });
+            }
+            // await mongo.updateOne(
+            //     { _id: "625025edc8b13bb0fd87915f" },
+            //     { $set: { ghost: newCommand } },
+            //     { upsert: true }
+            // )
+            _response.write("Command received: ");
         }
         _response.end();
     }

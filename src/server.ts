@@ -34,21 +34,27 @@ export namespace Oasis {
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
 
             // let newCommand: string = url.query["ghost"] != undefined ? url.query["ghost"].toString() : "None";
-            let newCommand = "None";
-            if(url.query["ghost"] != undefined) {
-                console.log("is NOT undefined!!!!");
-                newCommand = JSON.stringify(url.query);
-                console.log(newCommand);
-            }
+            // let newCommand = "None";
+            // if(url.query["ghost"] != undefined) {
+            //     console.log("is NOT undefined!!!!");
+            //     newCommand = JSON.stringify(url.query);
+            //     console.log(newCommand);
+            // }
 
             let mongo: Mongo.Collection = mongoClient.db("Oasis").collection("Commands");
+
+            for(let key in url.query) {
+                let newCommand: string = JSON.stringify(url.query[key]);
+                console.log(newCommand);
+                await mongo.insertOne({ command: newCommand });
+            }
             
-            await mongo.updateOne(
-                { _id: "625025edc8b13bb0fd87915f" },
-                { $set: { ghost: newCommand } },
-                { upsert: true }
-            )
-            _response.write("Command received: " + newCommand); 
+            // await mongo.updateOne(
+            //     { _id: "625025edc8b13bb0fd87915f" },
+            //     { $set: { ghost: newCommand } },
+            //     { upsert: true }
+            // )
+            _response.write("Command received: "); 
         }
         _response.end();
     }
